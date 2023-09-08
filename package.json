@@ -1,0 +1,24 @@
+{
+  "name": "webcrawler",
+  "version": "1.0.0",
+  "description": "Command line node.js application for crawler a website to produce a report of the internal linking structure of the website",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "jest": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pankajdwivedi077/webcrawler.git"
+  },
+  "keywords": [],
+  "author": "pankaj dwivedi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pankajdwivedi077/webcrawler/issues"
+  },
+  "homepage": "https://github.com/pankajdwivedi077/webcrawler#readme",
+  "devDependencies": {
+    "jest": "^29.6.4"
+  }
+}
