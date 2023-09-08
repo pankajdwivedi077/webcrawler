@@ -1,5 +1,40 @@
 const { JSDOM } = require('jsdom')
 
+async function crawlWebPage(website, webpage, pages){
+    
+    const baseUrlObj = new URL(website)
+    const currUrl = new URL (webpage)
+    if (baseUrlObj.hostname !== currUrl.hostname){
+        return pages
+    }
+
+    const normalizedCurrentUrl = normalizedUrl(webpage)
+    if (pages[normalizedCurrentUrl] > 0){
+        pages[normalizedCurrentUrl]++
+        return pages
+    }
+
+    pages[normalizedCurrentUrl] = 1
+
+    console.log(`crawling the ${webpage}`)
+
+     try {
+        const response = await fetch(webpage)
+
+        const htmlBody = await response.text()
+
+        const nextUrls = getUrlFromHtml(htmlBody, website)
+
+        for (const nextUrl of nextUrls){
+          pages = await crawlWebPage(website, nextUrl, pages)
+        }
+        
+     } catch (err){
+        console.log(`error in fetch: ${err.message} on page ${webpage}`)
+     }
+    return pages  
+}
+
 function getUrlFromHtml(htmlbody, baseURL){
   const urls = []
   const dom  = new JSDOM(htmlbody)
@@ -39,4 +74,4 @@ function normalizedUrl(urlString) {
     return result;
 }
 
-module.exports = { normalizedUrl, getUrlFromHtml }
+module.exports = { normalizedUrl, getUrlFromHtml, crawlWebPage }
